@@ -16,4 +16,5 @@ samba samba-client \
 openoffice.org-{calc,writer,impress} lyx \
 autocorr-de hunspell hyphen-de openoffice.org-writer2latex writer2latex \
 eclipse maven2 \
-git qgit subversion rapidsvn mercurial bzr bzr-gtk cvs
+git qgit subversion rapidsvn mercurial bzr bzr-gtk cvs\
+bash-completion
