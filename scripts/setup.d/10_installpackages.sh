@@ -16,7 +16,7 @@ samba samba-client \
 openoffice.org-{calc,writer,impress} lyx \
 autocorr-de hunspell hyphen-de openoffice.org-writer2latex writer2latex \
 eclipse \
-git qgit subversion rapidsvn mercurial bzr bzr-gtk cvs kate meld\
+git git-svn qgit subversion rapidsvn mercurial bzr bzr-gtk cvs kate meld\
 bash-completion\
 emerald compiz-fusion-extras-gnome compiz-fusion-unsupported-gnome\
 emerald-themes.noarch\
