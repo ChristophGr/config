@@ -17,6 +17,9 @@ source /etc/profile
 
 # Put your fun stuff here.
 
+# to fix line-wrap-issue
+shopt -s checkwinsize
+
 export LC_TIME="de_DE.UTF-8"
 
 #alias sshhome="ssh profalbert.dyndns.org"
