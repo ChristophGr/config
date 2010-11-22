@@ -25,14 +25,13 @@ export LC_TIME="de_DE.UTF-8"
 #alias sshhome="ssh profalbert.dyndns.org"
 #alias sshg0="ssh ffp0525747@g0.complang.tuwien.ac.at"
 
-alias qg="qgit4 --all"
+alias qg="qgit --all"
 alias cp2="rsync -rhv --progress"
 alias mci="mvn clean install -Dmaven.test.skip=true"
 alias n.="nautilus ."
 alias lse="ls | egrep"
 alias gru="git remote update origin -p"
 alias gph="git push origin HEAD"
-
 
 PATH=/usr/sbin:/sbin:$PATH
 
@@ -57,9 +56,9 @@ function truncate_dirname {
 }
 
 if [ "$EUID" != "0" ]; then
-	export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] $(truncate_dirname "\w")\[\033[0;33m\]$(set_git_branch)\[\033[01;34m\] \$\[\033[0m\] '
+	PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] $(truncate_dirname "\w")\[\033[0;33m\]$(set_git_branch)\[\033[01;34m\] \$\[\033[0m\] '
 else
-	export PS1='\[\033[01;31m\]\h\[\033[01;34m\] \w \$\[\033[00m\] '
+	PS1='\[\033[01;31m\]\h\[\033[01;34m\] \w \$\[\033[00m\] '
 fi
 
 function title {
