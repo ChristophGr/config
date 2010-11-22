@@ -1,5 +1,5 @@
 #!/bin/sh
-yum -y install thunderbird chromium pidgin \
+yum -y install thunderbird chromium pidgin pidgin-musictracker pidgin-libnotify\
 pidgin-otr purple-plugin_pack pidgin-latex pidgin pidgin-birthday-reminder \
 vlc mplayer mencoder gecko-mediaplayer gimp \
 rhythmbox gstreamer-plugins-ugly gstreamer-plugins-bad gstreamer-ffmpeg \
@@ -21,5 +21,8 @@ bash-completion \
 emerald compiz-fusion-extras-gnome compiz-fusion-unsupported-gnome \
 emerald-themes.noarch \
 seahorse-plugins \
-nautilus-open-terminal \
-xorg-x11-drv-nvidia-libs.i686 # for WoW
+nautilus-open-terminal nautilus-sound-converter \ audacity \
+# for WoW
+xorg-x11-drv-nvidia-libs.i686 \
+snes9x \
+kile

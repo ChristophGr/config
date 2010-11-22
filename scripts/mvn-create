@@ -1,0 +1,18 @@
+#!/bin/sh
+GROUPID=$1
+ARTIFACTID=$2
+
+function usage(){
+	echo usage: $0 groupid artifactid
+	exit 1;
+}
+
+if [ -z "$GROUPID" ]; then
+	usage
+fi
+
+if [ -z "$ARTIFACTID" ]; then
+	usage
+fi
+
+echo mvn archetype:create -DgroupId="$GROUPID" -DartifactId="$ARTIFACTID"

@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ -z $1 ]; then
+	echo "no argument supplied"
+	exit 1
+fi
+
+if [ -z $2 ]; then
+	yelp man:$1
+else
+  yelp "man:${2}(${1})"
+fi

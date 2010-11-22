@@ -1,0 +1,13 @@
+#!/bin/sh
+HOST=profalbert.dyndns.org
+PATH=`echo $@`
+if [ `test -r "$PATH"` ]; then
+	FILE=`echo $@ | sed s/"^.*\/"//`
+	scp "$@" profalbert.dyndns.org:/home/mldonkey/bittorrent
+	transmission-remote profalbert.dyndns.org -a "/home/mldonkey/bittorrent/$FILE"
+	ssh profalbert.dyndns.org rm "/home/mldonkey/bittorrent/$FILE"
+else
+	echo "cannot read \"$PATH\""
+	/usr/bin/sleep 5
+fi
+

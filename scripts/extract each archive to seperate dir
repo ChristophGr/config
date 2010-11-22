@@ -1,0 +1,69 @@
+#!/bin/sh
+#NAUTILUS_SCRIPT_SELECTED_FILE_PATHS: newline-delimited paths for selected files (only if local)
+#
+#NAUTILUS_SCRIPT_SELECTED_URIS: newline-delimited URIs for selected files
+#
+#NAUTILUS_SCRIPT_CURRENT_URI: URI for current location
+#
+#NAUTILUS_SCRIPT_WINDOW_GEOMETRY: position and size of current window
+
+COUNT=0
+function do_uncompress(){
+	local FILE=$PWD/$1
+	local DEST="$PWD/${1}_"
+	local SFILE=$(file "$FILE")
+
+	if [ $(echo $SFILE | grep -ci "7-zip archive") -gt 0 ]; then
+		mkdir "$DEST"
+		cd "$DEST"
+		7z x "$FILE"
+		cd ..
+	elif [ $(echo $SFILE | grep -c "Zip archive data") -gt 0 ]; then
+		unzip "$FILE" -d "$DEST"
+	elif [ $(echo $SFILE | grep -ci "RAR archive") -gt 0 ]; then
+		mkdir "$DEST"
+		cd "$DEST"
+		unrar x "$FILE"
+		cd ..
+	elif [ $(echo $SFILE | grep -ci "gzip compressed") -gt 0 ]; then
+		if [ $($(echo $FILE | grep -ci ".tar.gz$") -gt 0) -o $($(echo $FILE | grep -ci ".tgz$") -gt 0) ];  then
+			mkdir "$DEST"
+			tar -zxf "$FILE" -C "$DEST"
+		#else
+		#	mkdir "$DEST"
+		#	mv "$FILE" "$DEST"
+		#	local FNAME=$(echo $FILE | sed s/"$(dirname $FILE)"//)
+		#	cd "$DEST"
+		#	gunzip "$DEST/$FNAME"
+		#	cd ..
+		fi
+	elif [ $(echo $SFILE | grep -ci "bzip2 compressed") -gt 0 ]; then
+		if [ $($(echo $FILE | grep -ci ".tar.bz2$") -gt 0) -o $($(echo $FILE | grep -ci ".tbz2$") -gt 0) ];  then
+			mkdir "$DEST"
+			tar -jxf "$FILE" -C "$DEST"
+		#else
+		#	mkdir "$DEST"
+		#	mv "$FILE" "$DEST"
+		#	local FNAME=$(echo $FILE | sed s/"$(dirname $FILE)"//)
+		#	cd "$DEST"
+		#	bunzip2 "$DEST/$FNAME"
+		#	cd ..
+		fi
+	elif [ $(echo $SFILE | grep -ci "POSIX tar archive") -gt 0 ]; then
+		mkdir "$DEST"
+		tar -xf "$FILE" -C "$DEST"
+	else
+		return
+	fi
+	let COUNT=$COUNT+1
+}
+
+# echo for-loop > test.log
+for args do
+	FILE=$args
+#for FILE in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS; do
+	#echo $FILE >> test.log
+	do_uncompress "$FILE"
+done
+#echo end-for-loop >> test.log
+notify-send "unpack" "unpacked $COUNT archives"

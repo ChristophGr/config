@@ -1,0 +1,19 @@
+#!/bin/bash
+echo updating every 3 seconds!
+
+#TEMP=`nvidia-settings -q GPUCoreTemp | grep Attribute | sed s/"  Attribute 'GPUCoreTemp' (profalbert-laptop:0.0): "// | sed s/"\."//`
+MAX=100
+
+while [ true ]
+do
+	TEMP=`nvidia-settings -q GPUCoreTemp | grep Attribute | sed s/"  Attribute 'GPUCoreTemp' (profalbert-laptop:0.0): "// | sed s/"\."//`
+	if [ $TEMP -lt $MAX ]
+	then
+		echo $TEMP is lower than 100
+	else
+		echo $TEMP is higher than 100
+		mplayer ~/Downloads/alarm.wav
+		exit 1
+	fi
+	sleep 3
+done
