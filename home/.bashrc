@@ -21,6 +21,7 @@ source /etc/profile
 shopt -s checkwinsize
 
 export LC_TIME="de_DE.UTF-8"
+export JAVA_HOME=/usr/lib/jvm/java
 
 #alias sshhome="ssh profalbert.dyndns.org"
 #alias sshg0="ssh ffp0525747@g0.complang.tuwien.ac.at"
