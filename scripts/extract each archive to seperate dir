@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #NAUTILUS_SCRIPT_SELECTED_FILE_PATHS: newline-delimited paths for selected files (only if local)
 #
 #NAUTILUS_SCRIPT_SELECTED_URIS: newline-delimited URIs for selected files
