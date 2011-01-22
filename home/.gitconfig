@@ -1,0 +1,19 @@
+[core]
+	whitespace = trailing-space,space-before-tab
+	editor = editor.sh
+	autocrlf = input
+[user]
+	name = Christoph Gritschenberger
+[color]
+	ui = auto
+[pack]
+	threads = 0
+[diff]
+	renameLimit = 0
+[alias]
+	ci = commit
+	co = checkout
+	br = br
+	mg = merge
+	a = add
+	st = status
