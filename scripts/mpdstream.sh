@@ -2,21 +2,24 @@
 MPD_HOME=$HOME/.mpd
 MPD_PL=$MPD_HOME/playlists
 
+#MPC=$PWD/mpc.sh
+MPC=mpc
+
 mpc > /dev/null 2>&1
 if [ "$?" != 0 ]; then
 	echo not found, starting
 	mpd
 fi
 
-mpc | grep "^\[playing\] "
+$MPC | grep "^\[playing\] "
 if [ $? == 0 ]; then
 	$(dirname $0)/mpd_save_state.sh
-	mpc stop
+	$MPC stop
 	exit 0
 fi
 
 ## options
-CHOICES=$(mpc lsplaylists | grep -v ^last\$)
+CHOICES=$($MPC lsplaylists | grep -v ^last\$)
 CHOICE=$(echo "$CHOICES
 idobi
 woed
@@ -47,21 +50,21 @@ resume)
 *)
 	rm "$MPD_PL/last.m3u"
 	ln -s "$MPD_PL/${CHOICE}.m3u" $MPD_PL/last.m3u
-	mpc clear
-	mpc load "$CHOICE"
+	$MPC clear
+	$MPC load "$CHOICE"
 	echo ${CHOICE}
 	echo "${CHOICE}" | grep -i "\.va$"
 	if [ $? == 0 ]; then
-		mpc random on
+		$MPC random on
 	else
-		mpc random off
+		$MPC random off
 	fi
-	mpc play
+	$MPC play
 	exit 0
 	;;
 esac
 
-mpc clear
+$MPC clear
 echo URI: $URI
 echo URI_L: $URI_L
 if [ -e "$URI" ]; then
@@ -74,9 +77,9 @@ echo getting populating
 # $GETFILE $URI 2>/dev/null | grep '^File[0-9]*' | sed -e 's/^File[0-9]*=//'
 IP=$(nslookup profalbert.dyndns.org | grep Address | tail -n1 | egrep -o "[0-9\.]+")
 if [ "$IP" == "192.168.2.23" ]; then
-	mpc add "$URI_L"
+	$MPC add "$URI_L"
 else
 	echo server not found
 fi
-$GETFILE $URI 2>/dev/null | grep '^File[0-9]*' | sed -e 's/^File[0-9]*=//' | mpc add
-mpc play
+$GETFILE $URI 2>/dev/null | grep '^File[0-9]*' | sed -e 's/^File[0-9]*=//' | $MPC add
+$MPC play
