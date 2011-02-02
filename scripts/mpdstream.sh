@@ -19,7 +19,9 @@ if [ $? == 0 ]; then
 fi
 
 ## options
-CHOICES=$($MPC lsplaylists | grep -v ^last\$)
+ALBUMS=$($MPC list album)
+PLAYLISTS=$($MPC lsplaylists | grep -v ^last\$)
+CHOICES="$ALBUMS $PLAYLISTS"
 CHOICE=$(echo "$CHOICES
 idobi
 woed
@@ -48,10 +50,20 @@ resume)
 	exit 0
 	;;
 *)
-	rm "$MPD_PL/last.m3u"
+	rm -f "$MPD_PL/last.m3u"
 	ln -s "$MPD_PL/${CHOICE}.m3u" $MPD_PL/last.m3u
 	$MPC clear
-	$MPC load "$CHOICE"
+	echo "playing" > $HOME/.mpdstate
+	## if choice is a playlist
+	if echo "$PLAYLISTS" | grep "$CHOICE" > /dev/null; then
+		$MPC load "$CHOICE"
+	## choice is an album
+	else
+		echo loading album $CHOICE
+		$MPC find album "$CHOICE" | $MPC add
+		echo $CHOICE >> $HOME/.mpdstate
+	fi
+
 	echo ${CHOICE}
 	echo "${CHOICE}" | grep -i "\.va$"
 	if [ $? == 0 ]; then
