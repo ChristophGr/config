@@ -29,8 +29,8 @@ export JAVA_HOME=/usr/lib/jvm/java
 alias qg="qgit --all"
 alias cp2="rsync -rhv --progress"
 alias mci="mvn clean install -Dmaven.test.skip=true"
+alias mcip="mvn clean install pax:provision -Dmaven.test.skip=true"
 alias n.="nautilus ."
-alias lse="ls | egrep"
 alias gru="git remote update origin -p"
 alias gph="git push origin HEAD"
 
@@ -38,8 +38,16 @@ PATH=/usr/sbin:/sbin:$PATH
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 
-function set_git_branch {
+function set_git_branch2 {
 	__git_ps1 | sed s/" ("/"\["/ | sed s/")"/"\]"/
+}
+
+function set_git_branch {
+	timeout 1 $HOME/Projects/config/scripts/git_ps1.sh
+	if [ $? == 124 ]; then
+		__git_ps1 > /dev/null &
+		echo "*timeout*"
+	fi
 }
 
 MAX_LENGTH=30
